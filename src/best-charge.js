@@ -1,12 +1,14 @@
- var loadAllItems=require('../src/items.js');
- var loadPromotions=require('../src/promotions.js');
+ // var loadAllItems=require('../src/items.js');
+ // var loadPromotions=require('../src/promotions.js');
+
 //判断菜品在items中的下标
-function load_items(item_id){
-  let all_items=loadAllItems();
-  for(let item of all_items){
-    if(item.id==item_id) return item;
-  }
-}
+// function load_items(item_id){
+//   let all_items=loadAllItems();
+//   for(let item of all_items){
+//     if(item.id==item_id) return item;
+//   }
+// }
+
 //规范菜品格式(id,number,name,price)
 function normalize_items(selectedItems){
   let normal_items=[];
@@ -25,7 +27,7 @@ function normalize_items(selectedItems){
   }
   return normal_items;
 }
-//优惠方式2计算 (type,itemName,subprice)
+//优惠方式2计算 (type,itemName,subprice,total_price)
 function promotion_2(normal_items){
   let promotion2={};
   let load_promotions=loadPromotions();
@@ -68,25 +70,25 @@ function print_result(normal_items,promotion){
   //打印明细
   let str_result='============= 订餐明细 =============\n';
   for(let item of normal_items){
-    str_result+=item.name+' x '+item.number+' = '+item.price+'元\n';
+    str_result+=`${item.name} x ${item.number} = ${item.price}元\n`;
   }
   str_result+='-----------------------------------\n';
   //打印优惠
   if(promotion.type){
-    str_result+='使用优惠:\n'+promotion.type;
+    str_result+=`使用优惠:\n${promotion.type}`;
     if(promotion.itemNames){
       str_result+='(';
       for(let name of promotion.itemNames){
-        str_result+=name+'，'
+        str_result+=`${name}，`;
       }
     str_result=str_result.substring(0,str_result.length-1);
     str_result+=')';
     }
-    str_result+='，省'+promotion.subprice+'元\n';
+    str_result+=`，省${promotion.subprice}元\n`;
     str_result+='-----------------------------------\n';
   }
   //打印总计
-  str_result+='总计：'+promotion.total_price+'元\n';
+  str_result+=`总计：${promotion.total_price}元\n`;
   str_result+='==================================='
   return str_result;
 }
@@ -138,4 +140,4 @@ function bestCharge(selectedItems){
 //   return str_result;
 // }
 
-module.exports =bestCharge;
+// module.exports =bestCharge;
